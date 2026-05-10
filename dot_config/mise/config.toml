@@ -40,6 +40,5 @@ neovim = "latest"
 # ===================
 # その他
 # ===================
-chezmoi = "latest"
-tlrc = "latest"          # tldr の Rust 実装
+tlrc = "latest"
 tree-sitter = "latest"

@@ -29,11 +29,13 @@ if ! [ -x "$HOME/.local/bin/mise" ]; then
 fi
 echo "[=] mise: $(mise --version)"
 
-echo "[*] installing chezmoi via mise..."
-mise install --yes chezmoi@latest
+if ! [ -x "$HOME/.local/bin/chezmoi" ]; then
+    echo "[*] installing chezmoi via get.chezmoi.io..."
+    sh -c "$(curl -fsLS https://get.chezmoi.io)" -- -b "$HOME/.local/bin"
+fi
 
 echo "[*] running chezmoi init --apply..."
-mise exec chezmoi@latest -- chezmoi init --apply
+"$HOME/.local/bin/chezmoi" init --apply
 
 echo "[OK] bootstrap complete. Repo: $REPO_DIR"
 echo "    Open a new shell or run: export PATH=\"\$HOME/.local/bin:\$PATH\" && exec bash"

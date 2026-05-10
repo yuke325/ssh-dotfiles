@@ -51,10 +51,10 @@ exec bash
 
 `bootstrap.sh` → `chezmoi init --apply` の流れで以下が連続実行される:
 
-1. **`bootstrap.sh`** — repo を `~/.local/share/chezmoi` へ `mv` → `~/.local/bin/mise` が無ければ `curl https://mise.run | sh` で導入 → `mise install chezmoi@latest` で chezmoi を ad-hoc install → その chezmoi で `init --apply` を呼ぶ
+1. **`bootstrap.sh`** — repo を `~/.local/share/chezmoi` へ `mv` → `~/.local/bin/mise` が無ければ `curl https://mise.run | sh` (musl 強制) で導入 → `~/.local/bin/chezmoi` が無ければ `get.chezmoi.io` 公式インストーラ (musl 自動検出) で導入 → その chezmoi で `init --apply` を呼ぶ
 2. **`run_once_before_00-bootstrap-mise.sh`** — fallback。`bootstrap.sh` を経由せず `chezmoi update` 後の apply で mise が消えていた場合のみ動作する安全網
 3. **dotfiles 配置** — `dot_bashrc`, `dot_config/*` を `$HOME` へ展開
-4. **`run_onchange_after_30-mise-install.sh`** — `mise install` で `dot_config/mise/config.toml` 記載の全 CLI ツール（chezmoi 含む）を user-space に導入し、shim を生成
+4. **`run_onchange_after_30-mise-install.sh`** — `mise install` で `dot_config/mise/config.toml` 記載の全 CLI ツールを user-space に導入し、shim を生成 (chezmoi は mise 管理外なのでこの対象外)
 
 ## 管理対象（mise で導入される CLI）
 
@@ -65,7 +65,9 @@ exec bash
 | シェル / プロンプト | starship |
 | データ操作 | jq, yq, gum |
 | ターミナル / エディタ | zellij, neovim |
-| その他 | chezmoi, tlrc (tldr), tree-sitter |
+| その他 | tlrc (tldr), tree-sitter |
+
+chezmoi は古い glibc ホスト (CentOS 7 等) でも動く musl 静的バイナリが必要で、aqua-registry に musl asset 定義が無いため mise 経由では取得できない。`bootstrap.sh` から chezmoi 公式インストーラ (get.chezmoi.io) で直接 `~/.local/bin/chezmoi` に配置している。
 
 言語ランタイム（go/node/python/ruby/rust）は SSH 先で開発しない方針のため入れていない。必要になったら `dot_config/mise/config.toml` に追記する。
 
