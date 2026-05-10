@@ -18,18 +18,29 @@ SSH 先サーバーに以下が distro 標準で入っていること（ほぼ�
 
 ## セットアップ
 
-```bash
-# 1) chezmoi を ~/.local/bin に導入し、ssh ブランチを apply
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply yuke325/dotfiles --branch ssh
+chezmoi も mise も入っていないまっさらな SSH 先で、`git clone` してから同梱の `bootstrap.sh` を実行するだけで完結する。
 
-# 2) PATH を通して新シェルを起動
+```bash
+# 1) clone (好きな場所で OK、例: ~/dotfiles)
+git clone -b ssh https://github.com/yuke325/dotfiles.git ~/dotfiles
+
+# 2) bootstrap (内部で repo を ~/.local/share/chezmoi へ移動した後、mise → chezmoi → apply まで一気通貫)
+~/dotfiles/bootstrap.sh
+
+# 3) PATH を通して新シェルを起動
 export PATH="$HOME/.local/bin:$PATH"
 exec bash
 ```
 
+`bootstrap.sh` は最初に repo そのものを chezmoi デフォルト source dir である `~/.local/share/chezmoi` へ **`mv` で移動** する (clone 先の `~/dotfiles` は無くなる)。`rm` ではないので git 履歴・未 push 変更も全部 `~/.local/share/chezmoi` 配下に移される。
+
+これにより以後は `chezmoi apply` / `chezmoi edit` / `chezmoi cd` などをパス指定なしのデフォルト挙動で利用できる。
+
+> `~/.local/share/chezmoi` に別物が既存の場合、bootstrap.sh は `abort` する。事前に手動で退避してから再実行する。
+
 ## init 時のプロンプト
 
-初回実行時に以下を入力する:
+`bootstrap.sh` 実行中に以下を入力する:
 
 | 項目 | 説明 |
 |---|---|
@@ -38,11 +49,12 @@ exec bash
 
 ## 自動で実行される処理
 
-`chezmoi apply` の流れで以下が連続実行される:
+`bootstrap.sh` → `chezmoi init --apply` の流れで以下が連続実行される:
 
-1. **`run_once_before_00-bootstrap-mise.sh`** — mise が無ければ `curl https://mise.run | sh` で `~/.local/bin/mise` に導入
-2. **dotfiles 配置** — `dot_bashrc`, `dot_config/*` を `$HOME` へ展開
-3. **`run_onchange_after_30-mise-install.sh`** — `mise install` で `dot_config/mise/config.toml` 記載の全 CLI ツールを user-space に導入
+1. **`bootstrap.sh`** — repo を `~/.local/share/chezmoi` へ `mv` → `~/.local/bin/mise` が無ければ `curl https://mise.run | sh` で導入 → `mise install chezmoi@latest` で chezmoi を ad-hoc install → その chezmoi で `init --apply` を呼ぶ
+2. **`run_once_before_00-bootstrap-mise.sh`** — fallback。`bootstrap.sh` を経由せず `chezmoi update` 後の apply で mise が消えていた場合のみ動作する安全網
+3. **dotfiles 配置** — `dot_bashrc`, `dot_config/*` を `$HOME` へ展開
+4. **`run_onchange_after_30-mise-install.sh`** — `mise install` で `dot_config/mise/config.toml` 記載の全 CLI ツール（chezmoi 含む）を user-space に導入し、shim を生成
 
 ## 管理対象（mise で導入される CLI）
 
