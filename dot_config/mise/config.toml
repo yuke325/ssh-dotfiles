@@ -35,7 +35,8 @@ gum = "latest"
 # ターミナル / エディタ
 # ===================
 zellij = "latest"
-neovim = "latest"
+# neovim は古い glibc ホスト (CentOS 7 等) で公式バイナリが動かないため
+# mise 管理から外し、各ホストで source build する。手順: docs/build-neovim-on-centos7.md
 
 # ===================
 # その他

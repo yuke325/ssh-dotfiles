@@ -64,10 +64,13 @@ exec bash
 | Git / GitHub | gh, delta, lazygit |
 | シェル / プロンプト | starship |
 | データ操作 | jq, yq, gum |
-| ターミナル / エディタ | zellij, neovim |
+| ターミナル / エディタ | zellij |
 | その他 | tlrc (tldr), tree-sitter |
 
-chezmoi は古い glibc ホスト (CentOS 7 等) でも動く musl 静的バイナリが必要で、aqua-registry に musl asset 定義が無いため mise 経由では取得できない。`bootstrap.sh` から chezmoi 公式インストーラ (get.chezmoi.io) で直接 `~/.local/bin/chezmoi` に配置している。
+chezmoi と neovim は古い glibc ホスト (CentOS 7 等) の制約で mise 経由では入らないため、別ルートで配置している:
+
+- **chezmoi**: `bootstrap.sh` から公式インストーラ (get.chezmoi.io) で `~/.local/bin/chezmoi` に直接配置 (公式 installer が musl を自動検出)
+- **neovim**: musl ビルドが存在しないため、各ホストで source build する。手順: [`docs/build-neovim-on-centos7.md`](docs/build-neovim-on-centos7.md)
 
 言語ランタイム（go/node/python/ruby/rust）は SSH 先で開発しない方針のため入れていない。必要になったら `dot_config/mise/config.toml` に追記する。
 
