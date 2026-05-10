@@ -22,7 +22,7 @@ chezmoi も mise も入っていないまっさらな SSH 先で、`git clone` �
 
 ```bash
 # 1) clone (好きな場所で OK、例: ~/dotfiles)
-git clone -b ssh https://github.com/yuke325/dotfiles.git ~/dotfiles
+git clone https://github.com/yuke325/ssh-dotfiles.git ~/dotfiles
 
 # 2) bootstrap (内部で repo を ~/.local/share/chezmoi へ移動した後、mise → chezmoi → apply まで一気通貫)
 ~/dotfiles/bootstrap.sh
