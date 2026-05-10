@@ -19,7 +19,7 @@ fi
 if ! [ -x "$HOME/.local/bin/mise" ]; then
     command -v curl >/dev/null 2>&1 || { echo "[!] curl not found. Install curl first (distro-provided)." >&2; exit 1; }
     echo "[*] installing mise via mise.run..."
-    curl -fsSL https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
+    curl -fsSL https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" MISE_INSTALL_MUSL=1 sh
 fi
 export PATH="$HOME/.local/bin:$PATH"
 
