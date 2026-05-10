@@ -1,0 +1,11 @@
+{{- /*
+ble.sh: bash の readline 拡張（autosuggestion / syntax-highlight / 補完強化）。
+mise registry に無いため chezmoi external で ~/.local/share/blesh/ に git-repo として配置する。
+master ブランチには pre-built `ble.sh` が同梱されており make 不要で source 可能。
+refreshPeriod を 1 週間に設定し apply のたびに git fetch しない。
+*/ -}}
+
+[".local/share/blesh"]
+    type = "git-repo"
+    url = "https://github.com/akinomyoga/ble.sh.git"
+    refreshPeriod = "168h"

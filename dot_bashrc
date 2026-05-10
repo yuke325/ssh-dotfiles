@@ -1,0 +1,66 @@
+# ~/.bashrc — SSH 接続先用 bash 設定（インタラクティブ起動時のみ実行）
+
+case $- in
+    *i*) ;;
+      *) return ;;
+esac
+
+# ble.sh の init は冒頭、attach は末尾（他の bashrc 設定が反映された後にやる）
+[[ -f $HOME/.local/share/blesh/ble.sh ]] && source $HOME/.local/share/blesh/ble.sh --attach=none
+
+# PATH（mise の bootstrap 先 ~/.local/bin が必須）
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR="nvim"
+export FZF_DEFAULT_OPTS="--color=16 \
+  --color=fg:-1,bg:-1,hl:magenta \
+  --color=fg+:-1,bg+:black,hl+:magenta:bold \
+  --color=prompt:blue,pointer:cyan,marker:cyan \
+  --color=info:yellow,spinner:cyan,border:bright-black"
+
+# 履歴
+HISTFILE=~/.bash_history
+HISTSIZE=50000
+HISTFILESIZE=50000
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
+# bash オプション（4.0+）
+shopt -s checkwinsize
+shopt -s autocd 2>/dev/null
+shopt -s globstar 2>/dev/null
+
+# エイリアス
+alias ls="eza --icons"
+alias la="eza -a --header --icons"
+alias lt="eza --tree --level=2 --icons"
+alias n="nvim"
+alias zj="zellij"
+alias lg="lazygit"
+
+# yazi
+y() {
+    local tmp cwd
+    tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    command yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d "" cwd < "$tmp" || true
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+}
+
+# fzf キーバインド (CTRL-R で履歴検索、**<TAB> で fuzzy 補完)
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --bash)"
+
+# zoxide
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
+
+# mise (shims モード)
+command -v mise >/dev/null 2>&1 && eval "$(mise activate --shims bash)"
+
+# starship プロンプト
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
+# ローカル拡張（マシン固有設定）
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
+
+# ble.sh を最後に attach（途中 attach は PROMPT_COMMAND 等と競合する）
+[[ ${BLE_VERSION-} ]] && ble-attach

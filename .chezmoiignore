@@ -1,0 +1,17 @@
+LICENSE
+README.md
+docs/
+
+# ===================
+# Neovim キャッシュ・自動生成物
+# ===================
+.config/nvim/lazy-lock.json
+.config/nvim/.neoconf.json
+.config/nvim/.gitignore
+.config/nvim/LICENSE
+.config/nvim/README.md
+
+# ===================
+# Yazi
+# ===================
+.config/yazi/theme.toml.bak

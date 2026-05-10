@@ -1,0 +1,158 @@
+gui:
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - white
+    optionsTextColor:
+      - blue
+    selectedLineBgColor:
+      - black
+    cherryPickedCommitBgColor:
+      - blue
+    cherryPickedCommitFgColor:
+      - black
+    unstagedChangesColor:
+      - red
+    defaultFgColor:
+      - default
+    searchingActiveBorderColor:
+      - yellow
+      - bold
+  authorColors:
+    '*': green
+
+git:
+  pagers:
+    - pager: 'delta --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"'
+      colorArg: "always"
+
+customCommands:
+  - key: "c"
+    description: "クイックコミット (型: メッセージ)"
+    context: "files"
+    command: 'git commit -m "{{ .Form.Type }}: {{ .Form.Message }}"'
+    loadingText: "コミット中..."
+    prompts:
+      - type: "menu"
+        title: "コミット種類の選択"
+        key: "Type"
+        options:
+          - name: "✨  Feature"
+            description: "新機能の追加"
+            value: "feat"
+          - name: "🐛  Fix"
+            description: "バグ修正"
+            value: "fix"
+          - name: "📝  Docs"
+            description: "ドキュメントのみの変更"
+            value: "docs"
+          - name: "🎨  Style"
+            description: "コードの意味に影響しない変更（空白、フォーマットなど）"
+            value: "style"
+          - name: "🧹  Refactor"
+            description: "バグ修正も機能追加も行わないコード変更（リファクタリング）"
+            value: "refactor"
+          - name: "🚀  Perf"
+            description: "パフォーマンスを向上させるコード変更"
+            value: "perf"
+          - name: "✅  Test"
+            description: "テストの追加、または既存テストの修正"
+            value: "test"
+          - name: "📦  Build"
+            description: "ビルドシステムや外部依存関係の変更"
+            value: "build"
+          - name: "👷  CI"
+            description: "CI構成ファイルやスクリプトの変更"
+            value: "ci"
+          - name: "🔧  Chore"
+            description: "ソースやテストを変更しないその他の変更"
+            value: "chore"
+          - name: "⏪  Revert"
+            description: "以前のコミットの取り消し"
+            value: "revert"
+      - type: "input"
+        title: "コミットメッセージ"
+        key: "Message"
+        initialValue: ""
+
+  - key: "C"
+    description: "Conventional Commits仕様の完全なコミット"
+    context: "files"
+    command: |
+      git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}{{if .Form.BreakingChange}}!{{end}}: {{ .Form.Description }}" \
+      {{- if .Form.LongDescription }}
+      -m "{{ .Form.LongDescription }}" \
+      {{- end }}
+      {{- if .Form.BreakingChange }}
+      -m "BREAKING CHANGE: {{ .Form.BreakingChange }}"
+      {{- end }}
+    loadingText: "コミット中..."
+    prompts:
+      - type: "menu"
+        title: "コミット種類の選択"
+        key: "Type"
+        options:
+          - name: "✨  Feature"
+            description: "新機能の追加"
+            value: "feat"
+          - name: "🐛  Fix"
+            description: "バグ修正"
+            value: "fix"
+          - name: "📝  Docs"
+            description: "ドキュメントのみの変更"
+            value: "docs"
+          - name: "🎨  Style"
+            description: "コードの意味に影響しない変更（空白、フォーマットなど）"
+            value: "style"
+          - name: "🧹  Refactor"
+            description: "バグ修正も機能追加も行わないコード変更（リファクタリング）"
+            value: "refactor"
+          - name: "🚀  Perf"
+            description: "パフォーマンスを向上させるコード変更"
+            value: "perf"
+          - name: "✅  Test"
+            description: "テストの追加、または既存テストの修正"
+            value: "test"
+          - name: "📦  Build"
+            description: "ビルドシステムや外部依存関係の変更"
+            value: "build"
+          - name: "👷  CI"
+            description: "CI構成ファイルやスクリプトの変更"
+            value: "ci"
+          - name: "🔧  Chore"
+            description: "ソースやテストを変更しないその他の変更"
+            value: "chore"
+          - name: "⏪  Revert"
+            description: "以前のコミットの取り消し"
+            value: "revert"
+
+      - type: "input"
+        title: "変更のスコープ（任意）"
+        key: "Scopes"
+
+      - type: "input"
+        title: "変更内容の要約"
+        key: "Description"
+
+      - type: "input"
+        title: "詳細な説明（任意）"
+        key: "LongDescription"
+
+      - type: "input"
+        title: "破壊的変更の内容（任意、ヘッダーに '!' の付与）"
+        key: "BreakingChange"
+
+      - type: "confirm"
+        title: "コミットメッセージの確認"
+        body: |
+          {{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}{{if .Form.BreakingChange}}!{{end}}: {{ .Form.Description }}
+          {{- if .Form.LongDescription }}
+
+          {{ .Form.LongDescription }}
+          {{- end }}
+          {{- if .Form.BreakingChange }}
+
+          BREAKING CHANGE: {{ .Form.BreakingChange }}
+          {{- end }}

@@ -1,0 +1,11 @@
+{{- /* Git ユーザー情報の入力 */ -}}
+{{- $gitName := promptStringOnce . "git_name" "Git user.name" -}}
+{{- $gitEmail := promptStringOnce . "git_email" "Git user.email" -}}
+
+[data]
+    git_name = {{ $gitName | quote }}
+    git_email = {{ $gitEmail | quote }}
+
+[merge]
+    command = "nvim"
+    args = ["-d"]

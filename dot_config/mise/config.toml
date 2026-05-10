@@ -1,0 +1,45 @@
+[tools]
+# ===================
+# ファイル / プロセス / 検索
+# ===================
+ripgrep = "latest"
+fd = "latest"
+bat = "latest"
+eza = "latest"
+fzf = "latest"
+zoxide = "latest"
+btop = "latest"
+dust = "latest"
+yazi = "latest"
+
+# ===================
+# Git / GitHub
+# ===================
+gh = "latest"
+delta = "latest"
+lazygit = "latest"
+
+# ===================
+# シェル / プロンプト
+# ===================
+starship = "latest"
+
+# ===================
+# データ操作
+# ===================
+jq = "latest"
+yq = "latest"
+gum = "latest"
+
+# ===================
+# ターミナル / エディタ
+# ===================
+zellij = "latest"
+neovim = "latest"
+
+# ===================
+# その他
+# ===================
+chezmoi = "latest"
+tlrc = "latest"          # tldr の Rust 実装
+tree-sitter = "latest"

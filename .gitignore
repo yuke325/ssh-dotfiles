@@ -1,0 +1,22 @@
+# IDE/editor
+.idea/
+.vscode/
+.mcp.json
+.codex/
+
+# Non-managed shell configs (chezmoi uses dot_ prefix)
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.ripgreprc
+.gitmodules
+
+# Local Claude Code
+CLAUDE.local.md
+.nvimlog
+dot_claude/hooks/__pycache__/
+
+/.claude/
