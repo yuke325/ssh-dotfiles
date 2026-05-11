@@ -42,4 +42,6 @@ zellij = "latest"
 # その他
 # ===================
 tlrc = "latest"
-tree-sitter = "latest"
+# tree-sitter CLI は CentOS 7 (glibc 2.17) で公式 prebuilt が動かない
+# (aqua-registry に musl asset 定義無し)。conda-forge から入れる。
+# 手順: docs/install-conda.md

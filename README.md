@@ -1,82 +1,110 @@
-# dotfiles (ssh branch)
+# ssh-dotfiles (CentOS ブランチ)
 
-[chezmoi](https://www.chezmoi.io/) で管理された **SSH 接続先専用** dotfiles。
-Linux ホスト・**非特権ユーザー（sudo 不可）** での運用を前提に、CLI ツールは全て [mise](https://mise.jdx.dev/) で `~/.local/share/mise/` 配下に user-space インストールする。
+[chezmoi](https://www.chezmoi.io/) で管理された **CentOS 7 専用 SSH 接続先 dotfiles**。glibc 2.17 という古い環境向けに、`main` ブランチ (自動セットアップ重視・現代的 distro 向け) から分岐した。
 
-このブランチは macOS と main ブランチの汎用構成を捨て、headless Linux + bash + mise 一元管理に最適化されている。
+## main ブランチとの違い
 
-## 前提
+| | main | **CentOS (this branch)** |
+|---|---|---|
+| 想定 distro | AlmaLinux/Rocky 9, Ubuntu 22.04+ 等 (glibc 2.31+) | **CentOS 7 (glibc 2.17)** |
+| install 自動化 | `bootstrap.sh` で 1 コマンド | **無し (docs を見て手動)** |
+| `.chezmoiscripts/` 配下 script | mise を bootstrap, 全 CLI を一括 install | **無し (apply は config 配置のみ)** |
+| chezmoi apply の挙動 | script が走り、ツール install まで連動 | **ファイル配置だけ、何も自動実行しない** |
+| トラブル時の切り分け | script ブラックボックスあり | **明示的、ステップ毎に独立** |
+| 補助ツール | 不要 (host のものでカバー) | **conda 経由で gcc/git/curl/tree-sitter を入れ替え** |
 
-SSH 先サーバーに以下が distro 標準で入っていること（ほぼ全 distro で OK）:
+CentOS 7 で main ブランチを使うと、bootstrap の自動化が古い OS の制約と衝突して連続的に失敗する。このブランチは**自動化を諦め、明示性と確実性を優先**した。
 
-- `bash`
-- `git`
-- `curl`
-- `ca-certificates`
+## セットアップ手順
 
-ネットワーク：GitHub と https://mise.run / https://mise.jdx.dev に到達できること。
-
-## セットアップ
-
-chezmoi も mise も入っていないまっさらな SSH 先で、`git clone` してから同梱の `bootstrap.sh` を実行するだけで完結する。
+`docs/` 配下の手順書を順番に読んで手動で実行する:
 
 ```bash
-# 1) clone (好きな場所で OK、例: ~/dotfiles)
-git clone https://github.com/yuke325/ssh-dotfiles.git ~/dotfiles
+# 1) リポジトリ clone (好きな場所で OK、後で chezmoi のデフォルト dir へ移動する)
+git clone -b CentOS https://github.com/yuke325/ssh-dotfiles.git ~/dotfiles
 
-# 2) bootstrap (内部で repo を ~/.local/share/chezmoi へ移動した後、mise → chezmoi → apply まで一気通貫)
-~/dotfiles/bootstrap.sh
+# 2) docs を順に読んで実行
+#    a) docs/setup-overview.md       — 全体の流れと依存関係
+#    b) docs/install-mise.md         — mise (musl 強制) を ~/.local/bin/mise に
+#    c) docs/install-conda.md        — Miniforge + nvim-build env + ~/.local/bin/ への symlink
+#    d) docs/install-chezmoi.md      — chezmoi 本体 + repo を ~/.local/share/chezmoi へ + chezmoi init --apply
+#    e) docs/build-neovim-on-centos7.md — neovim を source build (30〜45 分)
 
-# 3) PATH を通して新シェルを起動
+# 3) 新シェル起動
 export PATH="$HOME/.local/bin:$PATH"
 exec bash
 ```
 
-`bootstrap.sh` は最初に repo そのものを chezmoi デフォルト source dir である `~/.local/share/chezmoi` へ **`mv` で移動** する (clone 先の `~/dotfiles` は無くなる)。`rm` ではないので git 履歴・未 push 変更も全部 `~/.local/share/chezmoi` 配下に移される。
+詳細は [`docs/setup-overview.md`](docs/setup-overview.md) を参照。
 
-これにより以後は `chezmoi apply` / `chezmoi edit` / `chezmoi cd` などをパス指定なしのデフォルト挙動で利用できる。
+## chezmoi apply で何が起こるか
 
-> `~/.local/share/chezmoi` に別物が既存の場合、bootstrap.sh は `abort` する。事前に手動で退避してから再実行する。
+このブランチは **`run_once_*` / `run_onchange_*` スクリプトを全廃**しているので、apply は純粋にファイル配置だけ:
+
+```
+chezmoi apply
+  ├─ .chezmoi.toml.tmpl    → prompt (git_name, git_email)
+  ├─ .chezmoiexternal.tmpl → ble.sh を ~/.local/share/blesh/ に git clone
+  └─ dot_* ファイル配置     → ~/.bashrc, ~/.config/* へ
+       └─ exit 0 (script が無いので失敗経路なし)
+```
+
+何度 `chezmoi apply` を叩いても**物理的に壊れない**設計。
+
+## 管理対象 (config ファイルのみ)
+
+chezmoi で管理される config ファイル:
+
+- `~/.bashrc` — bash 設定 (mise activate, starship init, ble.sh, alias 等)
+- `~/.config/mise/config.toml` — mise が install する CLI ツール一覧
+- `~/.config/git/config`, `~/.config/git/ignore` — git 設定
+- `~/.config/starship.toml` — starship プロンプト
+- `~/.config/nvim/` — LazyVim 設定一式
+- `~/.config/yazi/`, `~/.config/zellij/`, `~/.config/btop/`, `~/.config/bat/`, `~/.config/eza/`, `~/.config/lazygit/` — 各 CLI ツール設定
+
+ツール本体 (mise / chezmoi / conda / nvim 等) はこのリポジトリの管理外で、docs を見て手動 install する。
+
+## ツール管理マトリクス (実機セットアップで決まった構成)
+
+| ツール | 何で入れたか | 配置 | 詳細 docs |
+|---|---|---|---|
+| mise | mise.run (`MISE_INSTALL_MUSL=1` 必須) | `~/.local/bin/mise` | [install-mise.md](docs/install-mise.md) |
+| chezmoi | get.chezmoi.io (musl 自動検出) | `~/.local/bin/chezmoi` | [install-chezmoi.md](docs/install-chezmoi.md) |
+| Miniforge + conda env | conda-forge | `~/.local/miniforge/envs/nvim-build/` | [install-conda.md](docs/install-conda.md) |
+| gcc 11 / g++ / cc | conda-forge (symlink) | `~/.local/bin/{gcc,g++,cc}` | [install-conda.md](docs/install-conda.md) |
+| git 2.x | conda-forge (symlink) | `~/.local/bin/git` | [install-conda.md](docs/install-conda.md) |
+| curl 8.x | conda-forge (symlink) | `~/.local/bin/curl` | [install-conda.md](docs/install-conda.md) |
+| tree-sitter CLI 0.26.8 | conda-forge (symlink) | `~/.local/bin/tree-sitter` | [install-conda.md](docs/install-conda.md) |
+| neovim 0.12.2 | source build (conda gcc 11) | `~/.local/bin/nvim` + `~/.local/share/nvim/runtime/` | [build-neovim-on-centos7.md](docs/build-neovim-on-centos7.md) |
+| ripgrep, fd, bat, eza, fzf, zoxide, btop, dust, yazi, gh, delta, lazygit, starship, jq, yq, gum, zellij, tlrc | mise (`mise install --yes`) | `~/.local/share/mise/installs/*/*/` | [install-mise.md](docs/install-mise.md) |
+
+## 前提
+
+SSH 先サーバーに以下が distro 標準で入っていること:
+
+- bash 4.0+
+- git (1.8 でも OK、conda で 2.x を入れ直すので)
+- curl (7.29 でも OK、conda で 8.x を入れ直すので)
+- ca-certificates
+
+ネットワーク到達: GitHub、https://mise.run、https://conda-forge.org、https://get.chezmoi.io
+
+sudo 不可・非特権ユーザーで運用可能 (全部 `~/` 配下に閉じる)。
 
 ## init 時のプロンプト
 
-`bootstrap.sh` 実行中に以下を入力する:
+`chezmoi init --apply` 実行中 (= [install-chezmoi.md](docs/install-chezmoi.md) の最後) に以下を対話入力する:
 
 | 項目 | 説明 |
 |---|---|
 | `git_name` | Git のユーザー名 |
 | `git_email` | Git のメールアドレス |
 
-## 自動で実行される処理
-
-`bootstrap.sh` → `chezmoi init --apply` の流れで以下が連続実行される:
-
-1. **`bootstrap.sh`** — repo を `~/.local/share/chezmoi` へ `mv` → `~/.local/bin/mise` が無ければ `curl https://mise.run | sh` (musl 強制) で導入 → `~/.local/bin/chezmoi` が無ければ `get.chezmoi.io` 公式インストーラ (musl 自動検出) で導入 → その chezmoi で `init --apply` を呼ぶ
-2. **`run_once_before_00-bootstrap-mise.sh`** — fallback。`bootstrap.sh` を経由せず `chezmoi update` 後の apply で mise が消えていた場合のみ動作する安全網
-3. **dotfiles 配置** — `dot_bashrc`, `dot_config/*` を `$HOME` へ展開
-4. **`run_onchange_after_30-mise-install.sh`** — `mise install` で `dot_config/mise/config.toml` 記載の全 CLI ツールを user-space に導入し、shim を生成 (chezmoi は mise 管理外なのでこの対象外)
-
-## 管理対象（mise で導入される CLI）
-
-| カテゴリ | ツール |
-|---|---|
-| 検索 / FS | ripgrep, fd, bat, eza, fzf, zoxide, dust, yazi, btop |
-| Git / GitHub | gh, delta, lazygit |
-| シェル / プロンプト | starship |
-| データ操作 | jq, yq, gum |
-| ターミナル / エディタ | zellij |
-| その他 | tlrc (tldr), tree-sitter |
-
-chezmoi と neovim は古い glibc ホスト (CentOS 7 等) の制約で mise 経由では入らないため、別ルートで配置している:
-
-- **chezmoi**: `bootstrap.sh` から公式インストーラ (get.chezmoi.io) で `~/.local/bin/chezmoi` に直接配置 (公式 installer が musl を自動検出)
-- **neovim**: musl ビルドが存在しないため、各ホストで source build する。手順: [`docs/build-neovim-on-centos7.md`](docs/build-neovim-on-centos7.md)
-
-言語ランタイム（go/node/python/ruby/rust）は SSH 先で開発しない方針のため入れていない。必要になったら `dot_config/mise/config.toml` に追記する。
+入力値は `~/.config/chezmoi/chezmoi.toml` に永続化される。
 
 ## テーマ
 
-catppuccin (mocha) を各 config ファイルに直書きしている（中央 theme 機構は撤去済み）:
+catppuccin (mocha) を各 config ファイルに直書きしている (中央 theme 機構は撤去済み):
 
 - `dot_config/starship.toml` — starship パレット定義
 - `dot_config/yazi/theme.toml` — yazi UI
@@ -86,26 +114,24 @@ catppuccin (mocha) を各 config ファイルに直書きしている（中央 t
 - `dot_config/nvim/lua/plugins/theme.lua` — neovim catppuccin
 - `dot_config/git/config.tmpl` — git-delta の `[delta "catppuccin-mocha"]` セクション
 
-別テーマに変えたい場合は各ファイルを直接編集する。
-
 ## SSH 先で意図的に**入れない**もの
 
-- GUI ツール（ghostty, mpv, imv, satty, evince, obsidian など）
-- IME（fcitx5, mozc）
-- フォント（noto-fonts, nerd-fonts 等）
-- オーディオスタック（pipewire, wireplumber）
-- カーネル / ファイルシステム（linux-headers, ntfs-3g, exfatprogs, kernel-modules-hook）
-- Docker / lazydocker（rootless docker は別途構築が必要）
-- AI CLI（Claude Code, Codex, Gemini CLI — ローカル専用）
+- GUI ツール (ghostty, mpv, imv, satty, evince, obsidian など)
+- IME (fcitx5, mozc)
+- フォント (noto-fonts, nerd-fonts 等)
+- オーディオスタック (pipewire, wireplumber)
+- カーネル / ファイルシステム (linux-headers, ntfs-3g, exfatprogs 等)
+- Docker / lazydocker
+- AI CLI (Claude Code, Codex, Gemini CLI — ローカル専用)
 - Markdown viewer (glow)
-- 言語ランタイム（go/node/python/ruby/rust — 必要時に都度追加）
+- 言語ランタイム (go/node/python/ruby/rust — 必要時に都度追加)
 
 ## セットアップ後の確認
 
 ```bash
 mise --version
 mise ls
-which rg fd bat eza fzf lazygit gh delta zellij nvim chezmoi yazi starship
+which rg fd bat eza fzf lazygit gh delta zellij nvim chezmoi yazi starship tlrc tree-sitter
 bash -ic 'echo OK'
 nvim --version
 starship --version
