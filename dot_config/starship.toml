@@ -6,17 +6,17 @@ command_timeout = 1000
 palette = 'catppuccin_mocha'
 
 format = """
-[](blue)\
+[](base)\
 $os\
 $username\
 $hostname\
 $shell\
-[](bg:green fg:blue)\
+[](bg:surface1 fg:base)\
 $directory\
-[](fg:green bg:peach)\
+[](fg:surface1 bg:base)\
 $git_branch\
 $git_status\
-[](fg:peach bg:mauve)\
+[](fg:base bg:surface1)\
 $c\
 $cpp\
 $rust\
@@ -28,19 +28,19 @@ $kotlin\
 $haskell\
 $python\
 $ruby\
-[](fg:mauve bg:yellow)\
+[](fg:surface1 bg:base)\
 $docker_context\
 $conda\
 $pixi\
-[](fg:yellow bg:red)\
+[](fg:base bg:surface1)\
 $memory_usage\
 $time\
-[ ](fg:red)\
+[ ](fg:surface1)\
 $line_break$character"""
 
 [os]
 disabled = false
-style = "bg:blue fg:surface0"
+style = "bg:base fg:blue"
 
 [os.symbols]
 Windows = "󰍲"
@@ -68,18 +68,18 @@ Pop = ""
 
 [username]
 show_always = true
-style_user = "bg:blue fg:surface0"
-style_root = "bg:blue fg:surface0"
+style_user = "bg:base fg:blue"
+style_root = "bg:base fg:blue"
 format = '[ $user]($style)'
 
 [hostname]
 ssh_only = false
-style = "bg:blue fg:surface0"
+style = "bg:base fg:blue"
 format = '[@$hostname ]($style)'
 
 # [shell]
 # disabled = false
-# style = "bg:blue fg:surface0"
+# style = "bg:base fg:blue"
 # format = '[ $indicator]($style)'
 # bash_indicator = " "
 # zsh_indicator = " "
@@ -89,7 +89,7 @@ format = '[@$hostname ]($style)'
 # unknown_indicator = ""
 
 [directory]
-style = "fg:surface0 bg:green"
+style = "bg:surface1 fg:green"
 format = "[ $read_only$path ]($style)"
 read_only = " "
 truncation_length = 3
@@ -97,12 +97,12 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:peach"
-format = '[[ $symbol $branch ](fg:surface0 bg:peach)]($style)'
+style = "bg:base fg:peach"
+format = '[[ $symbol $branch ](fg:peach bg:base)]($style)'
 
 [git_status]
-style = "bg:peach"
-format = '[[($all_status$ahead_behind )](fg:surface0 bg:peach)]($style)'
+style = "bg:base fg:peach"
+format = '[[($all_status$ahead_behind )](fg:peach bg:base)]($style)'
 conflicted = " "
 ahead = "⇡${count} "
 behind = "⇣${count} "
@@ -116,83 +116,83 @@ deleted = "✘${count} "
 
 [git_metrics]
 disabled = false
-added_style = "fg:surface0 bg:peach"
-deleted_style = "fg:surface0 bg:peach"
+added_style = "fg:peach bg:base"
+deleted_style = "fg:peach bg:base"
 format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [nodejs]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [c]
 symbol = " "
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [cpp]
 symbol = " "
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [golang]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [php]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [java]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [kotlin]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [haskell]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [python]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version)( \($virtualenv\)) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version)( \($virtualenv\)) ](fg:mauve bg:surface1)]($style)'
 
 [ruby]
 symbol = ""
-style = "bg:mauve"
-format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+style = "bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 # [package]
 # symbol = "󰏗"
-# style = "bg:mauve"
+# style = "bg:surface1 fg:mauve"
 # display_private = true
-# format = '[[ $symbol( $version) ](fg:surface0 bg:mauve)]($style)'
+# format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:yellow"
-format = '[[ $symbol( $context) ](fg:surface0 bg:yellow)]($style)'
+style = "bg:base fg:yellow"
+format = '[[ $symbol( $context) ](fg:yellow bg:base)]($style)'
 
 [conda]
-style = "bg:yellow"
-format = '[[ $symbol( $environment) ](fg:surface0 bg:yellow)]($style)'
+style = "bg:base fg:yellow"
+format = '[[ $symbol( $environment) ](fg:yellow bg:base)]($style)'
 
 [pixi]
-style = "bg:yellow"
-format = '[[ $symbol( $version)( $environment) ](fg:surface0 bg:yellow)]($style)'
+style = "bg:base fg:yellow"
+format = '[[ $symbol( $version)( $environment) ](fg:yellow bg:base)]($style)'
 
 # [memory_usage]
 # disabled = false
@@ -204,8 +204,8 @@ format = '[[ $symbol( $version)( $environment) ](fg:surface0 bg:yellow)]($style)
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:red"
-format = '[[  $time ](fg:surface0 bg:red)]($style)'
+style = "bg:surface1 fg:red"
+format = '[[  $time ](fg:red bg:surface1)]($style)'
 
 [line_break]
 disabled = false
