@@ -6,17 +6,17 @@ command_timeout = 1000
 palette = 'catppuccin_mocha'
 
 format = """
-[](base)\
+[](surface1)\
 $os\
 $username\
 $hostname\
 $shell\
-[](bg:surface1 fg:base)\
+[ ❱ ](fg:base bg:surface1)\
 $directory\
-[](fg:surface1 bg:base)\
+[ ❱ ](fg:base bg:surface1)\
 $git_branch\
 $git_status\
-[](fg:base bg:surface1)\
+[ ❱ ](fg:base bg:surface1)\
 $c\
 $cpp\
 $rust\
@@ -28,11 +28,11 @@ $kotlin\
 $haskell\
 $python\
 $ruby\
-[](fg:surface1 bg:base)\
+[ ❱ ](fg:base bg:surface1)\
 $docker_context\
 $conda\
 $pixi\
-[](fg:base bg:surface1)\
+[ ❱ ](fg:base bg:surface1)\
 $memory_usage\
 $time\
 [ ](fg:surface1)\
@@ -40,7 +40,7 @@ $line_break$character"""
 
 [os]
 disabled = false
-style = "bg:base fg:blue"
+style = "bg:surface1 fg:blue"
 
 [os.symbols]
 Windows = "󰍲"
@@ -68,18 +68,18 @@ Pop = ""
 
 [username]
 show_always = true
-style_user = "bg:base fg:blue"
-style_root = "bg:base fg:blue"
+style_user = "bg:surface1 fg:blue"
+style_root = "bg:surface1 fg:blue"
 format = '[ $user]($style)'
 
 [hostname]
 ssh_only = false
-style = "bg:base fg:blue"
+style = "bg:surface1 fg:blue"
 format = '[@$hostname ]($style)'
 
 # [shell]
 # disabled = false
-# style = "bg:base fg:blue"
+# style = "bg:surface1 fg:blue"
 # format = '[ $indicator]($style)'
 # bash_indicator = " "
 # zsh_indicator = " "
@@ -97,12 +97,12 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:base fg:peach"
-format = '[[ $symbol $branch ](fg:peach bg:base)]($style)'
+style = "bg:surface1 fg:peach"
+format = '[[ $symbol $branch ](fg:peach bg:surface1)]($style)'
 
 [git_status]
-style = "bg:base fg:peach"
-format = '[[($all_status$ahead_behind )](fg:peach bg:base)]($style)'
+style = "bg:surface1 fg:peach"
+format = '[[($all_status$ahead_behind )](fg:peach bg:surface1)]($style)'
 conflicted = " "
 ahead = "⇡${count} "
 behind = "⇣${count} "
@@ -116,8 +116,8 @@ deleted = "✘${count} "
 
 [git_metrics]
 disabled = false
-added_style = "fg:peach bg:base"
-deleted_style = "fg:peach bg:base"
+added_style = "fg:peach bg:surface1"
+deleted_style = "fg:peach bg:surface1"
 format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [nodejs]
@@ -183,16 +183,16 @@ format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:base fg:yellow"
-format = '[[ $symbol( $context) ](fg:yellow bg:base)]($style)'
+style = "bg:surface1 fg:yellow"
+format = '[[ $symbol( $context) ](fg:yellow bg:surface1)]($style)'
 
 [conda]
-style = "bg:base fg:yellow"
-format = '[[ $symbol( $environment) ](fg:yellow bg:base)]($style)'
+style = "bg:surface1 fg:yellow"
+format = '[[ $symbol( $environment) ](fg:yellow bg:surface1)]($style)'
 
 [pixi]
-style = "bg:base fg:yellow"
-format = '[[ $symbol( $version)( $environment) ](fg:yellow bg:base)]($style)'
+style = "bg:surface1 fg:yellow"
+format = '[[ $symbol( $version)( $environment) ](fg:yellow bg:surface1)]($style)'
 
 # [memory_usage]
 # disabled = false
