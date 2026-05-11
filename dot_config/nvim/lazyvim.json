@@ -9,13 +9,7 @@
     "lazyvim.plugins.extras.editor.snacks_picker",
     "lazyvim.plugins.extras.formatting.prettier",
     "lazyvim.plugins.extras.lang.git",
-    "lazyvim.plugins.extras.lang.json",
-    "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.python",
-    "lazyvim.plugins.extras.lang.toml",
-    "lazyvim.plugins.extras.lang.yaml",
-    "lazyvim.plugins.extras.linting.eslint",
-    "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.util.chezmoi",
     "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.gh",
@@ -27,4 +21,3 @@
   },
   "version": 8
 }
-
