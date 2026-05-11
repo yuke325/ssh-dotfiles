@@ -11,12 +11,12 @@ $os\
 $username\
 $hostname\
 $shell\
-[](fg:base bg:surface1)\
+[](fg:base bg:surface1)\
 $directory\
-[](fg:base bg:surface1)\
+[](fg:base bg:surface1)\
 $git_branch\
 $git_status\
-[](fg:base bg:surface1)\
+[](fg:base bg:surface1)\
 $c\
 $cpp\
 $rust\
@@ -28,11 +28,11 @@ $kotlin\
 $haskell\
 $python\
 $ruby\
-[](fg:base bg:surface1)\
+[](fg:base bg:surface1)\
 $docker_context\
 $conda\
 $pixi\
-[](fg:base bg:surface1)\
+[](fg:base bg:surface1)\
 $memory_usage\
 $time\
 [ ](fg:surface1)\
