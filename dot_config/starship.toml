@@ -2,8 +2,6 @@ add_newline = true
 command_timeout = 1000
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = 'catppuccin_mocha'
-
 format = """
 $os\
 $username\
@@ -30,41 +28,42 @@ $line_break$character"""
 
 [os]
 disabled = false
-style = "fg:red"
+style = "bg:red fg:white bold"
+format = '[](fg:red)[$symbol]($style)'
 
 [os.symbols]
 Windows = "󰍲"
 Ubuntu = "󰕈"
-SUSE = ""
+SUSE = ""
 Raspbian = "󰐿"
 Mint = "󰣭"
 Macos = "󰀵"
-Manjaro = ""
+Manjaro = ""
 Linux = "󰌽"
 Gentoo = "󰣨"
 Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
-Android = ""
-AOSC = ""
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
 Arch = "󰣇"
 Artix = "󰣇"
-EndeavourOS = ""
-CentOS = ""
+EndeavourOS = ""
+CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
-Pop = ""
+Pop = ""
 
 [username]
 show_always = true
-style_user = "fg:red bold"
-style_root = "fg:red bold"
+style_user = "bg:red fg:white bold"
+style_root = "bg:red fg:white bold"
 format = '[ $user]($style)'
 
 [hostname]
 ssh_only = false
-style = "fg:red bold"
+style = "bg:red fg:white bold"
 format = '[@$hostname ]($style)'
 trim_at = "."
 
@@ -72,111 +71,96 @@ trim_at = "."
 # disabled = false
 # style = "fg:red"
 # format = '[ $indicator]($style)'
-# bash_indicator = " "
-# zsh_indicator = " "
+# bash_indicator = " "
+# zsh_indicator = " "
 # fish_indicator = "󰈺 "
-# powershell_indicator = " "
-# cmd_indicator = " "
-# unknown_indicator = ""
+# powershell_indicator = " "
+# cmd_indicator = " "
+# unknown_indicator = ""
 
 [directory]
-style = "fg:peach"
-format = "[$read_only$path ]($style)"
-read_only = " "
+style = "bg:blue fg:white"
+format = '[](fg:red bg:blue)[ $read_only$path ]($style)'
+read_only = " "
 truncation_length = 3
 truncation_symbol = "…/"
 
-[directory.substitutions]
-"~" = " "
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = "󰝚 "
-"Pictures" = " "
-"Developer" = "󰲋 "
-"dev" = "󰲋 "
-"Desktop" = " "
-"work" = " "
-".config" = " "
-
 [git_branch]
-symbol = ""
-style = "fg:yellow"
-format = '[ $symbol $branch ]($style)'
+symbol = ""
+style = "bg:yellow fg:black"
+format = '[](fg:blue bg:yellow)[ $symbol $branch ]($style)'
 
 [git_status]
-style = "fg:yellow"
+style = "bg:yellow fg:black"
 format = '[($all_status$ahead_behind )]($style)'
-conflicted = " "
+conflicted = " "
 ahead = "⇡${count} "
 behind = "⇣${count} "
 diverged = "⇕⇡${ahead_count}⇣${behind_count} "
 untracked = "?${count} "
-stashed = " ${count} "
+stashed = " ${count} "
 modified = "!${count} "
 staged = "+${count} "
 renamed = "»${count} "
 deleted = "✘${count} "
 
 [git_metrics]
-disabled = false
-added_style = "fg:green"
-deleted_style = "fg:red"
-format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+disabled = true
 
 [nodejs]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [c]
-symbol = " "
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = " "
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [cpp]
-symbol = " "
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = " "
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [rust]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [golang]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [php]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [java]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [kotlin]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [haskell]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 [python]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version)( \($virtualenv\)) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version)( \($virtualenv\)) ]($style)'
 
 [ruby]
-symbol = ""
-style = "fg:green"
-format = '[ $symbol( $version) ]($style)'
+symbol = ""
+style = "bg:bright-blue fg:white bold"
+format = '[](fg:yellow bg:bright-blue)[ $symbol( $version) ]($style)'
 
 # [package]
 # symbol = "󰏗"
@@ -185,17 +169,17 @@ format = '[ $symbol( $version) ]($style)'
 # format = '[ $symbol( $version) ]($style)'
 
 [docker_context]
-symbol = ""
-style = "fg:sapphire"
-format = '[ $symbol( $context) ]($style)'
+symbol = ""
+style = "bg:cyan fg:black"
+format = '[](fg:bright-blue bg:cyan)[ $symbol( $context) ]($style)'
 
 [conda]
-style = "fg:sapphire"
-format = '[ $symbol( $environment) ]($style)'
+style = "bg:cyan fg:black"
+format = '[](fg:bright-blue bg:cyan)[ $symbol( $environment) ]($style)'
 
 [pixi]
-style = "fg:sapphire"
-format = '[ $symbol( $version)( $environment) ]($style)'
+style = "bg:cyan fg:black"
+format = '[](fg:bright-blue bg:cyan)[ $symbol( $version)( $environment) ]($style)'
 
 # [memory_usage]
 # disabled = false
@@ -207,54 +191,26 @@ format = '[ $symbol( $version)( $environment) ]($style)'
 [time]
 disabled = false
 time_format = "%R"
-style = "fg:lavender"
-format = '[  $time ]($style)'
+style = "bg:green fg:black"
+format = '[](fg:cyan bg:green)[  $time ]($style)[](fg:green)'
 
 [line_break]
 disabled = false
 
 [character]
 disabled = false
-success_symbol = '[❯](bold green)'
-error_symbol = '[❯](bold red)'
-vimcmd_symbol = '[❯](bold green)'
-vimcmd_replace_one_symbol = '[❯](bold magenta)'
-vimcmd_replace_symbol = '[❯](bold magenta)'
-vimcmd_visual_symbol = '[❯](bold yellow)'
+success_symbol = '[ ❯ ](bg:green fg:black bold)'
+error_symbol = '[ ❯ ](bg:red fg:white bold)'
+vimcmd_symbol = '[ ❯ ](bg:green fg:black bold)'
+vimcmd_replace_one_symbol = '[ ❯ ](bg:magenta fg:white bold)'
+vimcmd_replace_symbol = '[ ❯ ](bg:magenta fg:white bold)'
+vimcmd_visual_symbol = '[ ❯ ](bg:yellow fg:black bold)'
 
 # [custom.cpu_load]
 # disabled = false
 # description = "CPU Load Average (1min)"
 # command = "cat /proc/loadavg | awk '{print $1}'"
 # when = "true"
-# symbol = " "
+# symbol = " "
 # style = "bg:lavender fg:surface0"
 # format = '[ $symbol$output ]($style)'
-
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
