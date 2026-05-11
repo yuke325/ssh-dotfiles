@@ -59,6 +59,8 @@ command -v mise >/dev/null 2>&1 && eval "$(mise activate --shims bash)"
 # starship プロンプト
 command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
 
+unset LS_COLORS
+
 # ローカル拡張（マシン固有設定）
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
 
