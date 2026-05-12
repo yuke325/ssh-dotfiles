@@ -40,7 +40,7 @@ $line_break$character"""
 
 [os]
 disabled = false
-style = "bg:surface1 fg:blue"
+style = "bold bg:surface1 fg:blue"
 
 [os.symbols]
 Windows = "󰍲"
@@ -68,18 +68,18 @@ Pop = ""
 
 [username]
 show_always = true
-style_user = "bg:surface1 fg:blue"
-style_root = "bg:surface1 fg:blue"
+style_user = "bold bg:surface1 fg:blue"
+style_root = "bold bg:surface1 fg:blue"
 format = '[ $user]($style)'
 
 [hostname]
 ssh_only = false
-style = "bg:surface1 fg:blue"
+style = "bold bg:surface1 fg:blue"
 format = '[@$hostname ]($style)'
 
 # [shell]
 # disabled = false
-# style = "bg:surface1 fg:blue"
+# style = "bold bg:surface1 fg:blue"
 # format = '[ $indicator]($style)'
 # bash_indicator = " "
 # zsh_indicator = " "
@@ -89,7 +89,7 @@ format = '[@$hostname ]($style)'
 # unknown_indicator = ""
 
 [directory]
-style = "bg:surface1 fg:green"
+style = "bold bg:surface1 fg:green"
 format = "[ $read_only$path ]($style)"
 read_only = " "
 truncation_length = 3
@@ -97,12 +97,12 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:surface1 fg:peach"
-format = '[[ $symbol $branch ](fg:peach bg:surface1)]($style)'
+style = "bold bg:surface1 fg:peach"
+format = '[[ $symbol $branch ](bold fg:peach bg:surface1)]($style)'
 
 [git_status]
-style = "bg:surface1 fg:peach"
-format = '[[($all_status$ahead_behind )](fg:peach bg:surface1)]($style)'
+style = "bold bg:surface1 fg:peach"
+format = '[[($all_status$ahead_behind )](bold fg:peach bg:surface1)]($style)'
 conflicted = " "
 ahead = "⇡${count} "
 behind = "⇣${count} "
@@ -116,83 +116,83 @@ deleted = "✘${count} "
 
 [git_metrics]
 disabled = false
-added_style = "fg:peach bg:surface1"
-deleted_style = "fg:peach bg:surface1"
+added_style = "bold fg:peach bg:surface1"
+deleted_style = "bold fg:peach bg:surface1"
 format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [nodejs]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [c]
 symbol = " "
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [cpp]
 symbol = " "
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [golang]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [php]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [java]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [kotlin]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [haskell]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [python]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version)( \($virtualenv\)) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version)( \($virtualenv\)) ](bold fg:mauve bg:surface1)]($style)'
 
 [ruby]
 symbol = ""
-style = "bg:surface1 fg:mauve"
-format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+style = "bold bg:surface1 fg:mauve"
+format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 # [package]
 # symbol = "󰏗"
-# style = "bg:surface1 fg:mauve"
+# style = "bold bg:surface1 fg:mauve"
 # display_private = true
-# format = '[[ $symbol( $version) ](fg:mauve bg:surface1)]($style)'
+# format = '[[ $symbol( $version) ](bold fg:mauve bg:surface1)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:surface1 fg:yellow"
-format = '[[ $symbol( $context) ](fg:yellow bg:surface1)]($style)'
+style = "bold bg:surface1 fg:yellow"
+format = '[[ $symbol( $context) ](bold fg:yellow bg:surface1)]($style)'
 
 [conda]
-style = "bg:surface1 fg:yellow"
-format = '[[ $symbol( $environment) ](fg:yellow bg:surface1)]($style)'
+style = "bold bg:surface1 fg:yellow"
+format = '[[ $symbol( $environment) ](bold fg:yellow bg:surface1)]($style)'
 
 [pixi]
-style = "bg:surface1 fg:yellow"
-format = '[[ $symbol( $version)( $environment) ](fg:yellow bg:surface1)]($style)'
+style = "bold bg:surface1 fg:yellow"
+format = '[[ $symbol( $version)( $environment) ](bold fg:yellow bg:surface1)]($style)'
 
 # [memory_usage]
 # disabled = false
@@ -204,8 +204,8 @@ format = '[[ $symbol( $version)( $environment) ](fg:yellow bg:surface1)]($style)
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:surface1 fg:red"
-format = '[[  $time ](fg:red bg:surface1)]($style)'
+style = "bold bg:surface1 fg:red"
+format = '[[  $time ](bold fg:red bg:surface1)]($style)'
 
 [line_break]
 disabled = false
